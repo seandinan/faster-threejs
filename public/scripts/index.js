@@ -8,7 +8,8 @@ var renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, precision: 
 renderer.setClearColor(0xF3F3F4);
 // -----------------------------------------------------------------------------------
 var loader = new THREE.PLYLoader();
-loader.load('/resources/monkey.ply', function(geometry){
+// loader.load('/resources/monkey.ply', function(geometry){
+loader.load('/resources/20160127-111211-FinalHighColorMesh.ply', function(geometry){
 	geometry.computeFaceNormals();
 	geometry.center();
 	var material = new THREE.MeshBasicMaterial({
@@ -29,13 +30,14 @@ function sendModelData(){
 	console.log('making model data...');
 	var xhr = new XMLHttpRequest();
 	xhr.open('POST', 'modelThings', true);
-	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 	xhr.onreadystatechange = function(event){
 		if (xhr.readyState == xhr.DONE && xhr.status == 200){
-			console.log('Done');
+			console.log(JSON.parse(JSON.parse(event.target.responseText).modelData));
 		}
 	}
-	xhr.send(JSON.stringify(scene.children[0]));
+	xhr.send('modelData=' + JSON.stringify(scene.children[0]));
+
 }
 // -----------------------------------------------------------------------------------
 function render(){

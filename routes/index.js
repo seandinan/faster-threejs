@@ -7,8 +7,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/modelThings', function(req, res){
-	console.log(req);
-	res.status(200).send('OK');
+	res.status(200).send({modelData: req.body.modelData});
 })
 
 module.exports = router;
